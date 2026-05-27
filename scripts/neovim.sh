@@ -49,6 +49,19 @@ else
     log "Neovim config symlinked: $NVIM_CONFIG → $INIT_LUA_DIR"
 fi
 
+# macism — switches macOS input source from CLI.
+# Used by an InsertLeave autocmd in set.lua to force ABC on normal-mode entry,
+# avoiding Ghostty's "last composing Hangul char commits on ESC" issue.
+if [[ "$(uname)" == "Darwin" ]]; then
+    if command -v macism &>/dev/null; then
+        log "macism already installed"
+    else
+        brew tap laishulu/homebrew 2>/dev/null || true
+        brew install macism
+        log "macism installed"
+    fi
+fi
+
 # tree-sitter CLI (required by nvim-treesitter main branch)
 [[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
 if command -v tree-sitter &>/dev/null && tree-sitter --version &>/dev/null 2>&1; then
