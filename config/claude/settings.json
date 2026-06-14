@@ -1,5 +1,4 @@
 {
-  "model": "opus",
   "hooks": {
     "SessionStart": [
       {
@@ -42,5 +41,6 @@
     }
   },
   "skipDangerousModePermissionPrompt": true,
-  "editorMode": "vim"
+  "editorMode": "vim",
+  "agentPushNotifEnabled": true
 }
