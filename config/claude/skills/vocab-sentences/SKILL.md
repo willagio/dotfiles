@@ -53,7 +53,15 @@ Headword casing is flexible. The capitalization rules apply only to chunks insid
 
 `{{pronunciation_#}}` must contain bracket content only (syllable chunks only). Do not include surrounding brackets inside that placeholder.
 
+The file must begin with a YAML frontmatter block, where `id` is the current date string (`YYYY-MM-DD`). This block is only added when creating a new file; never duplicate or modify it when appending to an existing file.
+
 ```markdown
+---
+id: "{{current_date}}"
+aliases: []
+tags: []
+---
+
 # Vocabulary - {{current_date}}
 
 ---
@@ -79,7 +87,7 @@ Headword casing is flexible. The capitalization rules apply only to chunks insid
 
 ### Important Rules
 
-- If a file for the current date already exists, append the new vocabulary words to the existing file instead of overwriting it. Check for the existence of the word in the file before appending to avoid duplicates.
+- If a file for the current date already exists, append the new vocabulary words to the existing file instead of overwriting it. Check for the existence of the word in the file before appending to avoid duplicates. Keep the existing YAML frontmatter intact and do not add a second one.
 - Apply the same normalization when checking for existing words to prevent case/spacing variants from being added as duplicates.
 - Ensure all generated content is accurate and natural-sounding in both English and Korean.
 - Use the pronunciation format exactly as rendered in the heading template: `## word [chunk CHUNK chunk]` (non-IPA).
