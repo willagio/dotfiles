@@ -125,3 +125,18 @@ else
         warn "Could not install tree-sitter-cli — nvim-treesitter may not work"
     fi
 fi
+
+# redmine-core CLI — required by the redmine.nvim plugin. The lazy spec
+# auto-clones the plugin from GitHub; this installs the sibling CLI it
+# shells out to. Same install path the redmine.nvim README recommends.
+export PATH="$HOME/.local/bin:$PATH"
+if command -v redmine &>/dev/null; then
+    log "redmine-core CLI already installed: $(redmine --version 2>&1 | head -1)"
+else
+    if command -v uv &>/dev/null; then
+        uv tool install redmine-core
+        log "redmine-core CLI installed: $(redmine --version 2>&1 | head -1)"
+    else
+        warn "uv not found — install redmine-core manually (pipx install redmine-core)"
+    fi
+fi
