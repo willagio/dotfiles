@@ -44,6 +44,47 @@ curl -s -H "X-Redmine-API-Key: $REDMINE_API_KEY" \
 - 첨부파일은 목록(파일명·설명)만 파악. 다운로드 불필요.
 - 비공개 노트(private_notes)도 읽어 컨텍스트에 포함하되, 인용 시 `(비공개)` 표시.
 
+**로드 직후 두 값을 기억해 둔다** (refresh 델타 계산용):
+
+- `last_journal_id` = 저널 중 `id` 최댓값 (저널 없으면 `0`)
+- `updated_on` = 이슈 top-level `updated_on`
+
+### 갱신 추적 — 증분 refresh
+
+세션이 오래 떠 있는 동안 이슈에 새 저널/상태변경이 쌓인다. 사용자가 **"업데이트" / "새로고침" / "refresh"** 등 갱신 의도를 표하면 아래 절차로 **변경분만** 끌어온다.
+
+Redmine API는 "이 시점 이후 저널만" 필터가 없어 `include=journals`는 항상 전체를 내려준다. 그러므로 **jq로 셸 단계에서 잘라** 대화 컨텍스트에는 델타만 들이는 것이 핵심 — 같은 내용을 처음부터 다시 컨텍스트에 쌓지 말 것.
+
+1. **싼 변경 감지** — 저널 없이 `updated_on`만 확인:
+
+   ```bash
+   curl -s -H "X-Redmine-API-Key: $REDMINE_API_KEY" \
+     "$REDMINE_URL/issues/{id}.json" | jq -r '.issue.updated_on'
+   ```
+
+   - 기억해 둔 `updated_on`과 같으면 → **"변경 없음"** 한 줄 출력하고 끝. 큰 페이로드 부르지 않음.
+   - 다르면 2번으로.
+
+2. **델타만 추출** — 전체 저널을 받되 jq로 `last_journal_id` 초과분과 바뀐 필드만 남겨 출력:
+
+   ```bash
+   curl -s -H "X-Redmine-API-Key: $REDMINE_API_KEY" \
+     "$REDMINE_URL/issues/{id}.json?include=journals" \
+   | jq --argjson last {last_journal_id} '{
+       updated_on: .issue.updated_on,
+       status: .issue.status.name,
+       assigned_to: (.issue.assigned_to.name // null),
+       done_ratio: .issue.done_ratio,
+       new_journals: [.issue.journals[] | select(.id > $last)
+         | {id, user: .user.name, created_on, private_notes, notes, details}]
+     }'
+   ```
+
+3. **브리핑 + 저장값 갱신**:
+   - 새 저널(노트/상태·담당자·완료율 변경 `details`)만 짧게 브리핑. 변화 없는 항목은 언급 안 함.
+   - `last_journal_id`를 새 최댓값으로, `updated_on`을 새 값으로 갱신.
+   - 사용자가 같이 질문을 던졌으면 델타를 근거로 답한다.
+
 ### 시작 동작 — 짧은 브리핑 후 대기
 
 이슈 로드 후 **짧은 브리핑**만 출력한다. 전체 요약을 쏟아내지 말 것.
