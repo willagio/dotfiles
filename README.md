@@ -18,7 +18,7 @@ git clone https://github.com/willysk73/dotfiles.git ~/dotfiles
 | `git.sh` | Sets name, email, sensible defaults |
 | `zsh.sh` | Installs zsh, oh-my-zsh, autosuggestions, syntax highlighting |
 | `neovim.sh` | Installs neovim, clones [init.lua](https://github.com/willysk73/init.lua) config, symlinks to `~/.config/nvim` |
-| `claude.sh` | Installs Claude CLI, symlinks skills |
+| `agents.sh` | Installs Claude and Codex CLIs, symlinks shared skills and instructions |
 | `update.sh` | Updates everything — system packages, plugins, repos, oh-my-zsh |
 
 ## Usage
@@ -39,14 +39,14 @@ dotfiles/
 ├── config/
 │   ├── .zshrc              # Managed zsh config
 │   └── claude/
-│       └── skills/         # Claude Code custom skills
+│       └── skills/         # Shared Claude Code and Codex skills
 └── scripts/
     ├── tools.sh            # Base apt/brew packages
     ├── ssh.sh              # SSH key setup
     ├── git.sh              # Git config
     ├── zsh.sh              # Zsh + oh-my-zsh + plugins
     ├── neovim.sh           # Neovim + config symlink
-    ├── claude.sh           # Claude CLI + skills symlink
+    ├── agents.sh           # Claude + Codex CLIs and shared configuration
     └── update.sh           # Update everything
 ```
 

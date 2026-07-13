@@ -34,14 +34,14 @@ label() {
         zsh.sh)      echo "Zsh Shell" ;;
         neovim.sh)   echo "Neovim" ;;
         obsidian.sh) echo "Obsidian Vault" ;;
-        claude.sh)   echo "Claude CLI" ;;
+        agents.sh)   echo "Claude + Codex" ;;
         tmux.sh)     echo "Tmux" ;;
         ghostty.sh)  echo "Ghostty" ;;
         secrets.sh)  echo "Secrets" ;;
     esac
 }
 
-for script in tools.sh ssh.sh git.sh zsh.sh neovim.sh obsidian.sh claude.sh tmux.sh ghostty.sh secrets.sh; do
+for script in tools.sh ssh.sh git.sh zsh.sh neovim.sh obsidian.sh agents.sh tmux.sh ghostty.sh secrets.sh; do
     if [[ -f "$SCRIPTS_DIR/$script" ]]; then
         header "$(label "$script")"
         bash "$SCRIPTS_DIR/$script"

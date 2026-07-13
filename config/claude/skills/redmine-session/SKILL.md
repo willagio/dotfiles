@@ -1,11 +1,16 @@
+---
+name: redmine-session
+description: "Load a Redmine issue into the current conversation for questions, analysis, and incremental refreshes without creating a file. Use when the user asks to open, inspect, refresh, or discuss a Redmine issue by number or URL."
+---
+
 # Redmine Session Skill
 
 Redmine 이슈를 불러와 현재 대화의 컨텍스트로 깔아두고, 그 이슈에 대한 질문·작업을 이어간다. 파일은 만들지 않는다 (요약 노트가 필요하면 `redmine-summary` 사용).
 
 ## Invocation
 
-User-invocable: true
-Skill command: redmine-session
+- Claude Code: `/redmine-session`
+- Codex: `$redmine-session`
 
 ## Instructions
 

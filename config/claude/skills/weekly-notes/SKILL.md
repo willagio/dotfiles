@@ -1,11 +1,16 @@
+---
+name: weekly-notes
+description: "Generate a weekly Obsidian summary from daily notes, saved to ~/obsidian-vault/weekly/YYYY-WXX.md. Use when the user asks for weekly notes, a weekly review, or a weekly Obsidian summary."
+---
+
 # Weekly Notes Skill
 
 Generate a weekly summary note from Obsidian daily notes.
 
 ## Invocation
 
-User-invocable: true
-Skill command: weekly-notes
+- Claude Code: `/weekly-notes`
+- Codex: `$weekly-notes`
 
 ## Instructions
 

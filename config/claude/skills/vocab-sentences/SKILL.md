@@ -1,11 +1,16 @@
+---
+name: vocab-sentences
+description: "Generate English definitions, stress-readable pronunciations, example sentences, and Korean translations from a vocabulary list, saved under ~/obsidian-vault/vacabulary/. Use when the user asks for vocabulary sentences, word-list practice, or example sentences for English words."
+---
+
 # Vocabulary Sentences Skill
 
 This skill takes a list of English words, generates definitions, example sentences, and their Korean translations, then saves them to an Obsidian vault.
 
 ## Invocation
 
-User-invocable: true
-Skill command: vocab-sentences
+- Claude Code: `/vocab-sentences`
+- Codex: `$vocab-sentences`
 
 ## Instructions
 

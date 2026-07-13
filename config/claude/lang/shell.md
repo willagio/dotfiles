@@ -25,7 +25,7 @@ zsh 스크립트는 `#!/usr/bin/env zsh` + `setopt err_exit nounset pipefail`.
 
 ## Idempotent 패턴 (dotfiles 스크립트)
 
-"이미 설정되어 있나?" 검사 후 작업 — 본인 `scripts/claude.sh` 패턴:
+"이미 설정되어 있나?" 검사 후 작업 — 본인 `scripts/agents.sh` 패턴:
 
 ```bash
 if [[ -L "$DST" ]] && [[ "$(readlink "$DST")" == "$SRC" ]]; then

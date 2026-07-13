@@ -1,11 +1,16 @@
+---
+name: english-study
+description: "Generate a daily advanced English connected-speech study note covering natural American speech, reductions, slang, and accents, saved to ~/obsidian-vault/english-study/YYYY-MM-DD.md. Use when the user asks for English listening practice, connected speech, or an english-study note."
+---
+
 # English Connected Speech Study Skill
 
 매일 아침 30분 학습용 — 실전 상황에서의 연음, 축약, 슬랭, 사투리를 분석하는 영어 학습 노트를 생성한다.
 
 ## Invocation
 
-User-invocable: true
-Skill command: english-study
+- Claude Code: `/english-study`
+- Codex: `$english-study`
 
 ## Instructions
 
@@ -15,7 +20,7 @@ Skill command: english-study
 
 ### 상황 선택
 
-1. 사용자가 상황/맥락을 지정하면 (`/english-study "게임하면서 팀원과 voice chat"`) 그 상황을 사용
+1. 사용자가 상황/맥락을 지정하면 (`/english-study "게임하면서 팀원과 voice chat"` in Claude Code, `$english-study "게임하면서 팀원과 voice chat"` in Codex) 그 상황을 사용
 2. 지정하지 않으면 아래 예시 중 하나를 랜덤 선택 (매번 다른 상황):
 
    **직장 / Tech 업계:**

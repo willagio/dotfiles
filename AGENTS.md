@@ -7,7 +7,7 @@ Guidelines for AI agents working on this repository.
 - `install.sh` — Main orchestrator. Runs each script in `scripts/` in order.
 - `scripts/*.sh` — Individual setup scripts. Each is idempotent and can run standalone.
 - `config/.zshrc` — Managed zsh config, symlinked to `~/.zshrc`.
-- `config/claude/skills/` — Claude Code skills, symlinked to `~/.claude/skills/`.
+- `config/claude/skills/` — Shared Claude Code and Codex skills. The directory is symlinked to `~/.claude/skills/`; each skill is symlinked under `~/.codex/skills/`.
 
 ## Conventions
 

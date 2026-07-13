@@ -1,11 +1,16 @@
+---
+name: redmine-summary
+description: "Fetch and summarize a Redmine issue as an Obsidian note at ~/obsidian-vault/redmine/ISSUE-{id}.md. Use when the user asks to summarize a Redmine issue or create a Redmine note from an issue number or URL."
+---
+
 # Redmine Summary Skill
 
 Redmine 이슈를 요약하여 Obsidian 마크다운 노트로 생성한다.
 
 ## Invocation
 
-User-invocable: true
-Skill command: redmine-summary
+- Claude Code: `/redmine-summary`
+- Codex: `$redmine-summary`
 
 ## Instructions
 

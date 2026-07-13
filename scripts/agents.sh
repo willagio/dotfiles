@@ -63,6 +63,23 @@ else
     log "Claude skills symlinked: $SKILLS_DST → $SKILLS_SRC"
 fi
 
+CODEX_SKILLS_DST="$HOME/.codex/skills"
+mkdir -p "$CODEX_SKILLS_DST"
+
+for skill_src in "$SKILLS_SRC"/*; do
+    [[ -d "$skill_src" ]] || continue
+    skill_name="$(basename "$skill_src")"
+    skill_dst="$CODEX_SKILLS_DST/$skill_name"
+
+    if [[ -L "$skill_dst" ]] && [[ "$(readlink "$skill_dst")" == "$skill_src" ]]; then
+        log "Codex skill already symlinked: $skill_name"
+    else
+        [[ -e "$skill_dst" ]] && mv "$skill_dst" "$skill_dst.backup.$(date +%s)"
+        ln -sf "$skill_src" "$skill_dst"
+        log "Codex skill symlinked: $skill_dst → $skill_src"
+    fi
+done
+
 # Symlink agents
 AGENTS_SRC="$DOTFILES_DIR/config/claude/agents"
 AGENTS_DST="$HOME/.claude/agents"

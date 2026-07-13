@@ -1,11 +1,16 @@
+---
+name: monthly-notes
+description: "Generate an Obsidian monthly summary from weekly notes and any daily notes needed to fill gaps, saved to ~/obsidian-vault/monthly/YYYY-MM.md. Use when the user asks for monthly notes, a monthly review, or a monthly Obsidian summary."
+---
+
 # Monthly Notes Skill
 
 Generate a monthly summary note from Obsidian weekly notes and daily notes.
 
 ## Invocation
 
-User-invocable: true
-Skill command: monthly-notes
+- Claude Code: `/monthly-notes`
+- Codex: `$monthly-notes`
 
 ## Instructions
 

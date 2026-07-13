@@ -41,7 +41,7 @@ else
     PACKAGES=(
         curl git unzip build-essential software-properties-common
         python3 python3-venv python3-pip
-        ripgrep fd-find codespell tmux libclang-dev
+        ripgrep fd-find codespell tmux libclang-dev bubblewrap
         lua5.4 luarocks
     )
 

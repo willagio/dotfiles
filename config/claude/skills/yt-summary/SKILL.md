@@ -1,11 +1,16 @@
+---
+name: yt-summary
+description: "Extract or consume a YouTube transcript and create a concise Markdown summary under ~/obsidian-vault/youtube/. Use when the user asks to summarize a YouTube video, URL, or transcript."
+---
+
 # YouTube Summary Skill
 
 YouTube 동영상의 트랜스크립트를 추출하여 간결한 마크다운 요약을 생성한다.
 
 ## Invocation
 
-User-invocable: true
-Skill command: yt-summary
+- Claude Code: `/yt-summary`
+- Codex: `$yt-summary`
 
 ## Instructions
 
