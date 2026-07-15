@@ -14,15 +14,19 @@ warn() { echo -e "  ${YELLOW}!${NC} $1"; }
 NVIM_CONFIG="$HOME/.config/nvim"
 INIT_LUA_DIR="$HOME/repositories/init.lua"
 
-# Install neovim if not present
-if command -v nvim &>/dev/null; then
-    log "Neovim already installed: $(nvim --version | head -1)"
+# Install Neovim v0.13 dev (nightly). On macOS this is the --HEAD build;
+# on Linux the neovim-ppa/unstable channel.
+if command -v nvim &>/dev/null && nvim --version | head -1 | grep -q 'dev'; then
+    log "Neovim dev already installed: $(nvim --version | head -1)"
 else
-    echo "Installing Neovim..."
+    echo "Installing Neovim (v0.13 dev)..."
     if [[ "$(uname)" == "Darwin" ]]; then
-        brew install neovim
+        # --HEAD builds from source; `install --HEAD` errors if a stable keg
+        # exists and `reinstall` has no --HEAD, so drop the stable build first.
+        brew list neovim &>/dev/null && brew uninstall --ignore-dependencies neovim
+        brew install --HEAD neovim
     else
-        sudo add-apt-repository -y ppa:neovim-ppa/stable
+        sudo add-apt-repository -y ppa:neovim-ppa/unstable
         sudo apt-get update -qq
         sudo apt-get install -y -qq neovim
     fi
