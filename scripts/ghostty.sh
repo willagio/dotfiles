@@ -22,7 +22,9 @@ if [[ "$(uname)" == "Darwin" ]] && command -v brew &>/dev/null; then
     done
     if [[ ${#missing_fonts[@]} -gt 0 ]]; then
         echo "Installing fonts: ${missing_fonts[*]}"
-        brew install --cask "${missing_fonts[@]}"
+        # --force: overwrite font files that were installed manually into
+        # ~/Library/Fonts (brew aborts on pre-existing files otherwise)
+        brew install --cask --force "${missing_fonts[@]}"
         log "Fonts installed"
     else
         log "Fonts already installed"
