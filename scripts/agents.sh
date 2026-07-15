@@ -49,6 +49,31 @@ else
     log "Codex login complete"
 fi
 
+# Install cxc-loop from its GitHub marketplace
+CXC_MARKETPLACE="cxc-loop"
+CXC_MARKETPLACE_REPO="willagio/cxc-loop"
+CXC_MARKETPLACE_URL="https://github.com/willagio/cxc-loop.git"
+CXC_PLUGIN="cxc-loop@cxc-loop"
+
+marketplaces="$(codex plugin marketplace list --json)"
+if grep -Fq "\"source\": \"$CXC_MARKETPLACE_URL\"" <<< "$marketplaces"; then
+    log "cxc-loop marketplace already configured from GitHub"
+else
+    if grep -Fq "\"name\": \"$CXC_MARKETPLACE\"" <<< "$marketplaces"; then
+        codex plugin marketplace remove "$CXC_MARKETPLACE"
+    fi
+    codex plugin marketplace add "$CXC_MARKETPLACE_REPO"
+    log "cxc-loop marketplace configured from GitHub"
+fi
+
+plugins="$(codex plugin list --json)"
+if grep -Fq "\"pluginId\": \"$CXC_PLUGIN\"" <<< "$plugins"; then
+    log "cxc-loop plugin already installed"
+else
+    codex plugin add "$CXC_PLUGIN"
+    log "cxc-loop plugin installed"
+fi
+
 # Symlink skills
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILLS_SRC="$DOTFILES_DIR/config/claude/skills"

@@ -41,6 +41,27 @@ header "Oh My Zsh"
 ZSH="$HOME/.oh-my-zsh" command zsh -c 'source $ZSH/oh-my-zsh.sh && omz update --unattended' 2>/dev/null || true
 log "Oh My Zsh updated"
 
+header "Agent CLIs"
+if command -v claude &>/dev/null; then
+    if claude update; then
+        log "Claude CLI updated"
+    else
+        warn "Claude CLI update failed"
+    fi
+else
+    warn "Claude CLI not found, skipping"
+fi
+
+if command -v codex &>/dev/null; then
+    if codex update; then
+        log "Codex CLI updated"
+    else
+        warn "Codex CLI update failed"
+    fi
+else
+    warn "Codex CLI not found, skipping"
+fi
+
 header "npm global packages"
 if command -v npm &>/dev/null; then
     npm update -g --silent 2>/dev/null
