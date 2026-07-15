@@ -30,7 +30,7 @@ git -C "$HOME/repositories/init.lua" pull --quiet
 log "init.lua updated"
 
 header "Obsidian vault"
-git -C "$HOME/obsidian-vault" pull --quiet
+git -C "$HOME/obsidian-vault" pull --quiet --rebase --autostash
 log "Obsidian vault updated"
 
 header "Neovim plugins"
