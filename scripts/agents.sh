@@ -54,21 +54,36 @@ CXC_MARKETPLACE="cxc-loop"
 CXC_MARKETPLACE_REPO="willagio/cxc-loop"
 CXC_MARKETPLACE_URL="https://github.com/willagio/cxc-loop.git"
 CXC_PLUGIN="cxc-loop@cxc-loop"
+CXC_MARKETPLACE_REFRESHED=false
 
 marketplaces="$(codex plugin marketplace list --json)"
 if grep -Fq "\"source\": \"$CXC_MARKETPLACE_URL\"" <<< "$marketplaces"; then
-    log "cxc-loop marketplace already configured from GitHub"
+    if codex plugin marketplace upgrade "$CXC_MARKETPLACE"; then
+        CXC_MARKETPLACE_REFRESHED=true
+        log "cxc-loop marketplace refreshed from GitHub"
+    else
+        warn "cxc-loop marketplace refresh failed — keeping the installed version"
+    fi
 else
     if grep -Fq "\"name\": \"$CXC_MARKETPLACE\"" <<< "$marketplaces"; then
         codex plugin marketplace remove "$CXC_MARKETPLACE"
     fi
     codex plugin marketplace add "$CXC_MARKETPLACE_REPO"
+    CXC_MARKETPLACE_REFRESHED=true
     log "cxc-loop marketplace configured from GitHub"
 fi
 
 plugins="$(codex plugin list --json)"
 if grep -Fq "\"pluginId\": \"$CXC_PLUGIN\"" <<< "$plugins"; then
-    log "cxc-loop plugin already installed"
+    if [[ "$CXC_MARKETPLACE_REFRESHED" == true ]]; then
+        if codex plugin add "$CXC_PLUGIN"; then
+            log "cxc-loop plugin refreshed"
+        else
+            warn "cxc-loop plugin refresh failed — keeping the installed version"
+        fi
+    else
+        log "cxc-loop plugin already installed"
+    fi
 else
     codex plugin add "$CXC_PLUGIN"
     log "cxc-loop plugin installed"
