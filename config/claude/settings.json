@@ -1,4 +1,5 @@
 {
+  "model": "opus[1m]",
   "hooks": {
     "SessionStart": [
       {
@@ -18,7 +19,8 @@
   "enabledPlugins": {
     "claude-hud@claude-hud": true,
     "codex@openai-codex": true,
-    "ccx@ccx-loop": true
+    "ccx@ccx-loop": true,
+    "swift-lsp@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "claude-hud": {
@@ -40,8 +42,8 @@
       }
     }
   },
+  "tui": "fullscreen",
   "skipDangerousModePermissionPrompt": true,
   "editorMode": "vim",
-  "agentPushNotifEnabled": true,
-  "tui": "fullscreen"
+  "agentPushNotifEnabled": true
 }
