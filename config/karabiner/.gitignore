@@ -1,0 +1,4 @@
+automatic_backups/
+assets/
+*.bak-*
+*.backup.*

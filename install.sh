@@ -38,11 +38,12 @@ label() {
         tmux.sh)     echo "Tmux" ;;
         ghostty.sh)  echo "Ghostty" ;;
         aerospace.sh) echo "AeroSpace" ;;
+        karabiner.sh) echo "Karabiner-Elements" ;;
         secrets.sh)  echo "Secrets" ;;
     esac
 }
 
-for script in tools.sh ssh.sh git.sh zsh.sh neovim.sh obsidian.sh agents.sh tmux.sh ghostty.sh aerospace.sh secrets.sh; do
+for script in tools.sh ssh.sh git.sh zsh.sh neovim.sh obsidian.sh agents.sh tmux.sh ghostty.sh aerospace.sh karabiner.sh secrets.sh; do
     if [[ -f "$SCRIPTS_DIR/$script" ]]; then
         header "$(label "$script")"
         bash "$SCRIPTS_DIR/$script"
