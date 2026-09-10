@@ -1,5 +1,5 @@
 config-version = 2
-persistent-workspaces = ['1', '2', '3', '4', '5', '6', '7', '8']
+persistent-workspaces = ['1', '2', '3', '4', '5', '6', '7', '8', '1r', '2r', '3r', '4r', '5r', '6r', '7r', '8r']
 
 start-at-login = true
 after-login-command = []
@@ -17,6 +17,26 @@ automatically-unhide-macos-hidden-apps = false
 [key-mapping]
 preset = 'qwerty'
 
+# Each monitor owns its own workspace set. With a single monitor
+# 'secondary' matches nothing and everything falls back to main.
+[workspace-to-monitor-force-assignment]
+1 = 'main'
+2 = 'main'
+3 = 'main'
+4 = 'main'
+5 = 'main'
+6 = 'main'
+7 = 'main'
+8 = 'main'
+1r = 'secondary'
+2r = 'secondary'
+3r = 'secondary'
+4r = 'secondary'
+5r = 'secondary'
+6r = 'secondary'
+7r = 'secondary'
+8r = 'secondary'
+
 [gaps]
 inner.horizontal = 12
 inner.vertical = 12
@@ -26,31 +46,40 @@ outer.top = 8
 outer.right = 8
 
 [mode.main.binding]
-# Workspaces: alt + asdf zxcv -> 1..8
-alt-a = 'workspace 1'
-alt-s = 'workspace 2'
-alt-d = 'workspace 3'
-alt-f = 'workspace 4'
-alt-z = 'workspace 5'
-alt-x = 'workspace 6'
-alt-c = 'workspace 7'
-alt-v = 'workspace 8'
+# Workspaces: alt + asdf zxcv -> 1..8 on the focused monitor (komorebi-style).
+# 1-8 live on the main monitor, 1r-8r on the secondary one; ws.sh picks the set.
+alt-a = 'exec-and-forget "$HOME/dotfiles/config/aerospace/ws.sh" 1'
+alt-s = 'exec-and-forget "$HOME/dotfiles/config/aerospace/ws.sh" 2'
+alt-d = 'exec-and-forget "$HOME/dotfiles/config/aerospace/ws.sh" 3'
+alt-f = 'exec-and-forget "$HOME/dotfiles/config/aerospace/ws.sh" 4'
+alt-z = 'exec-and-forget "$HOME/dotfiles/config/aerospace/ws.sh" 5'
+alt-x = 'exec-and-forget "$HOME/dotfiles/config/aerospace/ws.sh" 6'
+alt-c = 'exec-and-forget "$HOME/dotfiles/config/aerospace/ws.sh" 7'
+alt-v = 'exec-and-forget "$HOME/dotfiles/config/aerospace/ws.sh" 8'
 
-alt-shift-a = 'move-node-to-workspace --focus-follows-window 1'
-alt-shift-s = 'move-node-to-workspace --focus-follows-window 2'
-alt-shift-d = 'move-node-to-workspace --focus-follows-window 3'
-alt-shift-f = 'move-node-to-workspace --focus-follows-window 4'
-alt-shift-z = 'move-node-to-workspace --focus-follows-window 5'
-alt-shift-x = 'move-node-to-workspace --focus-follows-window 6'
-alt-shift-c = 'move-node-to-workspace --focus-follows-window 7'
-alt-shift-v = 'move-node-to-workspace --focus-follows-window 8'
+alt-shift-a = 'exec-and-forget "$HOME/dotfiles/config/aerospace/ws.sh" 1 move'
+alt-shift-s = 'exec-and-forget "$HOME/dotfiles/config/aerospace/ws.sh" 2 move'
+alt-shift-d = 'exec-and-forget "$HOME/dotfiles/config/aerospace/ws.sh" 3 move'
+alt-shift-f = 'exec-and-forget "$HOME/dotfiles/config/aerospace/ws.sh" 4 move'
+alt-shift-z = 'exec-and-forget "$HOME/dotfiles/config/aerospace/ws.sh" 5 move'
+alt-shift-x = 'exec-and-forget "$HOME/dotfiles/config/aerospace/ws.sh" 6 move'
+alt-shift-c = 'exec-and-forget "$HOME/dotfiles/config/aerospace/ws.sh" 7 move'
+alt-shift-v = 'exec-and-forget "$HOME/dotfiles/config/aerospace/ws.sh" 8 move'
 
 alt-tab = 'workspace-back-and-forth'
 
+# Monitors (stacked vertically, so use next/prev instead of left/right):
+# alt + , . focus, alt + shift + , . move window
+alt-comma = 'focus-monitor --wrap-around prev'
+alt-period = 'focus-monitor --wrap-around next'
+alt-shift-comma = 'move-node-to-monitor --focus-follows-window --wrap-around prev'
+alt-shift-period = 'move-node-to-monitor --focus-follows-window --wrap-around next'
+
 # Focus / move: alt + hjkl
 alt-h = 'focus left'
-alt-j = 'focus down'
-alt-k = 'focus up'
+# j/k cross into the monitor above/below at the workspace edge
+alt-j = 'focus --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors down'
+alt-k = 'focus --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors up'
 alt-l = 'focus right'
 
 alt-shift-h = 'move left'
