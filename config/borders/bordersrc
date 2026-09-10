@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# JankyBorders config. `borders` sources this only when launched with no
+# arguments and no instance is running -- i.e. via `brew services start borders`.
+
+options=(
+    active_color=0xffc6a0f6
+    inactive_color=0xff494d64
+    width=6.0
+)
+
+borders "${options[@]}"

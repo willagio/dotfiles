@@ -29,7 +29,7 @@ else
     log "AeroSpace installed"
 fi
 
-# JankyBorders: focused window highlight (launched by aerospace after-startup-command)
+# JankyBorders: focused window highlight (own launchd service, see below)
 if brew list --formula borders &>/dev/null; then
     log "borders already installed"
 else
@@ -48,4 +48,28 @@ else
     [[ -e "$CONFIG_DST" ]] && mv "$CONFIG_DST" "$CONFIG_DST.backup.$(date +%s)"
     ln -sf "$CONFIG_SRC" "$CONFIG_DST"
     log "AeroSpace config symlinked: $CONFIG_DST → $CONFIG_SRC"
+fi
+
+# borders config: sourced by `borders` only when it is launched with no
+# arguments, which is how the brew service starts it.
+BORDERS_SRC="$DOTFILES_DIR/config/borders/bordersrc"
+BORDERS_DST="$HOME/.config/borders/bordersrc"
+
+mkdir -p "$(dirname "$BORDERS_DST")"
+if [[ -L "$BORDERS_DST" ]] && [[ "$(readlink "$BORDERS_DST")" == "$BORDERS_SRC" ]]; then
+    log "borders config already symlinked"
+else
+    [[ -e "$BORDERS_DST" ]] && mv "$BORDERS_DST" "$BORDERS_DST.backup.$(date +%s)"
+    ln -sf "$BORDERS_SRC" "$BORDERS_DST"
+    log "borders config symlinked: $BORDERS_DST → $BORDERS_SRC"
+fi
+
+# launchd keeps borders alive independently of AeroSpace, whose
+# after-startup-command only fires on app launch.
+if brew services list | grep -qE '^borders[[:space:]]+started'; then
+    brew services restart borders >/dev/null
+    log "borders service restarted"
+else
+    brew services start borders >/dev/null
+    log "borders service started"
 fi
