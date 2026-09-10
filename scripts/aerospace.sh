@@ -66,10 +66,9 @@ fi
 
 # launchd keeps borders alive independently of AeroSpace, whose
 # after-startup-command only fires on app launch.
-if brew services list | grep -qE '^borders[[:space:]]+started'; then
-    brew services restart borders >/dev/null
-    log "borders service restarted"
-else
-    brew services start borders >/dev/null
-    log "borders service started"
-fi
+# `brew services start` only bootstraps the job (and fails if it is already
+# loaded); on macOS 26 launchd does not spawn it until kickstarted.
+BORDERS_JOB="gui/$(id -u)/sh.brew.borders"
+launchctl print "$BORDERS_JOB" &>/dev/null || brew services start borders >/dev/null
+launchctl kickstart -k "$BORDERS_JOB"
+log "borders service (re)started"
