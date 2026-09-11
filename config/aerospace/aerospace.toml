@@ -95,7 +95,7 @@ alt-shift-l = 'move right'
 # Layout
 alt-slash = 'layout tiles horizontal vertical'
 alt-m = 'fullscreen'
-alt-shift-space = 'layout floating tiling'
+alt-t = 'layout floating tiling'
 alt-minus = 'resize smart -50'
 alt-equal = 'resize smart +50'
 
