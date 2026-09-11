@@ -20,7 +20,8 @@
     "claude-hud@claude-hud": true,
     "codex@openai-codex": true,
     "ccx@ccx-loop": true,
-    "swift-lsp@claude-plugins-official": true
+    "swift-lsp@claude-plugins-official": true,
+    "plain-english@plain-english-marketplace": true
   },
   "extraKnownMarketplaces": {
     "claude-hud": {
@@ -39,6 +40,12 @@
       "source": {
         "source": "github",
         "repo": "willysk73/ccx-loop"
+      }
+    },
+    "plain-english-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "b1rdmania/claude-plain-english-skill"
       }
     }
   },
