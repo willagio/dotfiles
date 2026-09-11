@@ -7,7 +7,11 @@ after-login-command = []
 after-startup-command = []
 
 enable-normalization-flatten-containers = true
-enable-normalization-opposite-orientation-for-nested-containers = true
+# Nested containers keep the parent orientation. With the opposite-orientation
+# rule on, a nested container is forced vertical, and once it becomes the root's
+# only child the flatten rule promotes it -- silently flipping the whole
+# workspace to top/bottom splits on a 5120x1440 monitor.
+enable-normalization-opposite-orientation-for-nested-containers = false
 
 default-root-container-layout = 'tiles'
 default-root-container-orientation = 'auto'
