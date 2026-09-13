@@ -7,11 +7,7 @@ after-login-command = []
 after-startup-command = []
 
 enable-normalization-flatten-containers = true
-# Nested containers keep the parent orientation. With the opposite-orientation
-# rule on, a nested container is forced vertical, and once it becomes the root's
-# only child the flatten rule promotes it -- silently flipping the whole
-# workspace to top/bottom splits on a 5120x1440 monitor.
-enable-normalization-opposite-orientation-for-nested-containers = false
+enable-normalization-opposite-orientation-for-nested-containers = true
 
 default-root-container-layout = 'tiles'
 default-root-container-orientation = 'auto'
@@ -95,7 +91,20 @@ alt-shift-l = 'move right'
 # Layout
 alt-slash = 'layout tiles horizontal vertical'
 alt-m = 'fullscreen'
+alt-shift-slash = 'layout horizontal --root'
 alt-t = 'layout floating tiling'
+
+# Split a cell with the neighbour in that direction. The nested container gets
+# the opposite orientation, so the two windows share the cell instead of
+# overlapping.
+alt-left  = 'join-with left'
+alt-down  = 'join-with down'
+alt-up    = 'join-with up'
+alt-right = 'join-with right'
+
+# Walk the window tree.
+alt-leftSquareBracket  = 'focus dfs-prev'
+alt-rightSquareBracket = 'focus dfs-next'
 alt-minus = 'resize smart -50'
 alt-equal = 'resize smart +50'
 
