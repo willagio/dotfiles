@@ -38,6 +38,14 @@ else
     log "borders installed"
 fi
 
+# SwiftBar displays the focused stack in the native menu bar.
+if brew list --cask swiftbar &>/dev/null; then
+    log "SwiftBar already installed"
+else
+    brew install --cask swiftbar
+    log "SwiftBar installed"
+fi
+
 # Symlink aerospace config
 CONFIG_SRC="$DOTFILES_DIR/config/aerospace/aerospace.toml"
 CONFIG_DST="$HOME/.aerospace.toml"
@@ -72,3 +80,29 @@ BORDERS_JOB="gui/$(id -u)/sh.brew.borders"
 launchctl print "$BORDERS_JOB" &>/dev/null || brew services start borders >/dev/null
 launchctl kickstart -k "$BORDERS_JOB"
 log "borders service (re)started"
+
+SWIFTBAR_SRC="$DOTFILES_DIR/config/swiftbar"
+SWIFTBAR_DST="$HOME/.config/swiftbar"
+mkdir -p "$(dirname "$SWIFTBAR_DST")"
+if [[ -L "$SWIFTBAR_DST" ]] && [[ "$(readlink "$SWIFTBAR_DST")" == "$SWIFTBAR_SRC" ]]; then
+    log "SwiftBar config already symlinked"
+else
+    [[ -e "$SWIFTBAR_DST" ]] && mv "$SWIFTBAR_DST" "$SWIFTBAR_DST.backup.$(date +%s)"
+    ln -sf "$SWIFTBAR_SRC" "$SWIFTBAR_DST"
+    log "SwiftBar config symlinked"
+fi
+
+defaults write com.ameba.SwiftBar PluginDirectory -string "$SWIFTBAR_DST"
+defaults write com.ameba.SwiftBar HideSwiftBarIcon -bool true
+defaults write com.ameba.SwiftBar StealthMode -bool true
+defaults write com.ameba.SwiftBar DimOnManualRefresh -bool false
+osascript <<'APPLESCRIPT'
+tell application "System Events"
+    set autohide menu bar of dock preferences to false
+    if not (exists login item "SwiftBar") then
+        make login item at end with properties {path:"/Applications/SwiftBar.app", hidden:true}
+    end if
+end tell
+APPLESCRIPT
+open -g -a SwiftBar
+log "SwiftBar started and enabled at login"

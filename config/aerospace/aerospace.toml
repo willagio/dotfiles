@@ -11,8 +11,10 @@ enable-normalization-opposite-orientation-for-nested-containers = true
 
 default-root-container-layout = 'tiles'
 default-root-container-orientation = 'auto'
+accordion-padding = 0
 
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+on-focus-changed = ['exec-and-forget open -g "swiftbar://refreshplugin?name=aerospace"']
 automatically-unhide-macos-hidden-apps = false
 
 [key-mapping]
@@ -87,19 +89,22 @@ alt-shift-l = 'move right'
 alt-slash = 'layout tiles horizontal vertical'
 alt-m = 'fullscreen'
 alt-shift-slash = 'layout horizontal --root'
-alt-t = 'layout floating tiling'
+# Restore floating windows beside an accordion instead of inside it.
+alt-t = [
+    'layout floating tiling',
+    'test %{window-parent-container-layout} = h_accordion && move down || test %{window-parent-container-layout} = v_accordion && move right || true',
+    'exec-and-forget open -g "swiftbar://refreshplugin?name=aerospace"',
+]
 
-# Split a cell with the neighbour in that direction. The nested container gets
-# the opposite orientation, so the two windows share the cell instead of
-# overlapping.
-alt-left  = 'join-with left'
-alt-down  = 'join-with down'
-alt-up    = 'join-with up'
-alt-right = 'join-with right'
+# Stack with the neighbour only if joining succeeds.
+alt-left  = 'join-with left && layout accordion'
+alt-down  = 'join-with down && layout accordion'
+alt-up    = 'join-with up && layout accordion'
+alt-right = 'join-with right && layout accordion'
 
-# Walk the window tree.
-alt-leftSquareBracket  = 'focus dfs-prev'
-alt-rightSquareBracket = 'focus dfs-next'
+# Cycle only the overlapping windows in the current stack.
+alt-leftSquareBracket  = 'exec-and-forget osascript -l JavaScript "$HOME/dotfiles/config/aerospace/cycle-stack.js" prev'
+alt-rightSquareBracket = 'exec-and-forget osascript -l JavaScript "$HOME/dotfiles/config/aerospace/cycle-stack.js" next'
 alt-minus = 'resize smart -50'
 alt-equal = 'resize smart +50'
 
