@@ -19,6 +19,7 @@ git clone https://github.com/willysk73/dotfiles.git ~/dotfiles
 | `zsh.sh` | Installs zsh, oh-my-zsh, autosuggestions, syntax highlighting |
 | `neovim.sh` | Installs neovim, clones [init.lua](https://github.com/willysk73/init.lua) config, symlinks to `~/.config/nvim` |
 | `agents.sh` | Installs Claude and Codex CLIs, symlinks shared skills and instructions |
+| `gksdud.sh` | Installs [gksdud](https://github.com/codingnoye/gksdud) via Homebrew for Korean/English switching (macOS); grant Accessibility access and select Right Command in the app |
 | `update.sh` | Updates everything — system packages, plugins, repos, oh-my-zsh |
 
 ## Usage
