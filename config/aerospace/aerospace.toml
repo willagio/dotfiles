@@ -40,7 +40,7 @@ inner.horizontal = 12
 inner.vertical = 12
 outer.left = 8
 outer.bottom = 8
-outer.top = 8
+outer.top = 4
 outer.right = 8
 
 [mode.main.binding]
