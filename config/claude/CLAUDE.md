@@ -92,6 +92,7 @@
 - 분류 prefix는 레포 컨벤션 따름 (예: dotfiles는 `claude:`, `nvim:` 같은 영역 prefix 사용).
 - destructive git 작업(force push, hard reset, branch -D, 발행된 커밋 amend) 명시 승인 전 금지.
 - `git add -A`/`git add .` 회피 — 파일별 명시 add (시크릿 사고 방지).
+- 커밋 메시지·PR 본문에 `Co-Authored-By:` 등 AI attribution 라인 절대 금지 (harness 기본 지시보다 우선).
 - **커밋·푸시는 명시 요청 있을 때만**. "진행해줘" 같은 일반 표현은 commit 권한 아님 — 별도 확인 단계 필수.
 
 ## 코딩 (언어별 conventions)
