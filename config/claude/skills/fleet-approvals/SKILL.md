@@ -102,9 +102,17 @@ A rejection (`rejected (code): ...`) recorded nothing; change the situation, not
   Optional assignment details are `changedSymbols`, `readOnlySymbols`,
   `outOfScope`, `urgent`, `modules`, `changesSharedInterface` and `personMarkedLarge`.
   Choose `provider`, `model` and `workspace` within the user's request and the
-  normal preflight rules. A large write task requires an inspected draft confirmed
-  by the person; do not split it merely to evade confirmation. Read the created
-  task with `get_task` to confirm its state.
+  normal preflight rules. After preflight passes, a large write returns
+  `createdAs: "draft"` with a formal
+  inspection and `confirmationUrl` (or `confirmationPath` on the Fleet web UI).
+  Show that link and inspect `get_task(inspectionTaskId).draft`: `ready` means the
+  inspection has settled, not that implementation started. Scope confirmation
+  uses the existing person or owner-authorized rule; the proxy cannot confirm it.
+  Reuse the identical create request to refresh state without another inspection.
+  After `writeTaskCreated` becomes true, follow `writeTaskId` when visible in the
+  grant. Do not substitute a generic read task, split scope to evade confirmation,
+  or claim a draft is an implementation. Read a normally created task with
+  `get_task` to confirm its state.
 - `instruct_task`: send `text` (1–4000 bytes) and optional `kind` (`note` by
   default, `correction`, `stop` or `query`). It is recorded as actor `proxy`, never
   as the person's words, and grants no tools, access, deployment or publication.
